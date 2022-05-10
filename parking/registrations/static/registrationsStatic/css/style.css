@@ -1,0 +1,24 @@
+.section__title{
+    font-size: 24px;
+    text-align: center;
+    }
+
+.btn-toggle_myclass{
+    margin-top: 60px !important;
+width: 60% !important;
+margin-left: 20%;
+margin-bottom: 4%;
+}
+
+.regisrtButton{
+    margin-top: 5%;
+margin-bottom: 5%;
+}
+
+.enterTalon{
+    margin-top: 5%;
+}
+
+.registrationsToggle{
+    display: none;
+}

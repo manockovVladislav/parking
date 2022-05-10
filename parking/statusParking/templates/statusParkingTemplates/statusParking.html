@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Талицы Книг</title>
+    <meta name="description" content="Description" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'tablesStatic/css/style.css' %}" />
+</head>
+
+<body>
+    <section class="section organization_class">
+        <div class="section__title"><div class="text_personal_room">Библиотека</div>
+</div>
+
+<div class="container">
+    <div class="row common_block">
+        <div class="col-lg-12 col-12">
+
+<div class="form-row">
+<div class="form-group col-md-6">
+<label for="inputName">Название </label>
+<input type="text" class="form-control" id="inputName">
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-group col-md-6">
+<label for="inputDescription">Описание Книги </label>
+<input type="text" class="form-control" id="inputDescription">
+</div>
+</div>
+
+<div class="form-group col-md-4">
+<label for="inputDate">Дата написания:</label>
+<input type="date" id="dateInput" class="form-control">
+</div>
+
+<div class="form-group col-md-4">
+<label for="inputGenre">Жанр</label>
+<select id="inputGenre" class="form-control">
+<option selected>Выбрать</option>
+{% for object in all_genre %}
+<option data-val="{{ object.id }}">{{ object.name_genre }}</option>
+{% endfor %}
+</select>
+</div>
+<div class="form-group col-md-4">
+<label for="inputAuthor">Автор</label>
+<select id="inputAuthor" class="form-control">
+<option selected>Выбрать</option>
+{% for object in all_author %}
+<option>{{ object.author }}</option>
+{% endfor %}
+
+</select>
+</div>
+<div class="form-group col-md-2 col-md-offset-2">   
+<button type="submit" class="btn btn-primary serchButton">Поиск</button>
+</div>
+</div>
+</div>
+</div>               
+
+<div class="container">
+    <div class="row common_block">
+        <div class="col-lg-12 col-12">
+       
+            
+         
+            <table class="personal-table">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Название Книги</td>
+                        <td>Описание Книги</td>
+                        <td>Дата написания</td>
+                        <td>Автор</td>
+                        <td>Жанр</td>
+                        <td >Комментировать</td>
+                    </tr>
+                </thead>
+
+
+{% for object in all_books %}
+                <tbody data-val="{{ object.id }} " class="trRow">
+                    <tr >
+                        <td>
+                            <p> {{ object.id }} </p>
+                        </td>
+                        <td>
+                            <p class="nameBook"> {{ object.name_book}} </p>
+                        </td>
+                        <td>
+                            <p> {{ object.about_book}} </p>
+                        </td>
+                        <td>
+                            <p> {{ object.year_writed }} </p>
+                        </td>
+                        <td>
+                            <p  class="author"> {{ object.id_author.author}}</p>
+                        </td>
+                        <td>
+                            <p> {{ object.id_genre.name_genre}} </p>
+                        </td>
+                        <td>
+                            <p  class="comment"> комментировать </p>
+                            <div class="download_modal">
+                            <div class="download_modal-content">
+
+                            {% for comment in all_comment %}
+                                {% if object.id == comment.id_book_id %} 
+                                <div class="textContent">{{comment.text}}  {{comment.time_create}} {{comment.user}}</div>
+                                {% endif%} 
+                            {% endfor %}
+                             {% if request.user.is_authenticated %}
+                            <div class="form-row fwidth">
+                                <div class="form-group col-md-6">
+                                <label for="inputComment">Введите комментарий </label>
+                            <input type="text" class="form-control" id="inputComment">
+                            </div>
+                            </div>
+                                <div class="form-group col-md-2 col-md-offset-2">   
+                                    <button data-val="{{ object.id }}"  type="submit" class="btn btn-primary commentButton">Оставить коментарий</button>
+                                </div>
+                                    {% endif %}
+                                 <span class="windowsLink_file-close">X</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+{% endfor %} 
+
+
+
+            </table>
+        </div>
+    </div>
+</div>
+</section>
+<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+<script src="{% static 'tablesStatic/js/tables.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
